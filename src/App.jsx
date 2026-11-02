@@ -4632,21 +4632,17 @@ function Notifications({
                           ? new Date(item.created_at).toLocaleString()
                           : ''}
                       </p>
-                    </div>
-
-                                    {!item.is_read && (
-                    <span className="w-2 h-2 mt-1 rounded-full bg-cyan-400 shrink-0" />
-                  )}
-                </button>
-              ))
-            )}
+                                      {!item.is_read && (
+                      <span className="w-2 h-2 mt-1 rounded-full bg-cyan-400 shrink-0" />
+                    )}
+                  </button>
+                ))
+              )}
+            </div>
           </div>
-        </div>
-      </>
-    )}
-  </div>
-
-  <Analytics />
+        </>
+      )}
+    </div>
   </>
 );
 }
