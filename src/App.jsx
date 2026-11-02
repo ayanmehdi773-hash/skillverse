@@ -6,8 +6,6 @@ import {
   UserRound, Pencil, Save, AtSign, Trophy, Users
 } from 'lucide-react';
 
-import { Analytics } from '@vercel/analytics/react';
-
 import { supabase, isSupabaseConfigured } from './lib/supabaseClient';
 
 const AVATAR_BUCKET = 'avatars';
