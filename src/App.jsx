@@ -4497,32 +4497,32 @@ function Notifications({
       current.map((item) => ({ ...item, is_read: true }))
     );
   };
- const handleNotificationClick = async (item) => {
-  await markAsRead(item.id);
-  setOpen(false);
 
-  // Challenge notifications
-  if (
-    (item.type === 'challenge_join' ||
-      item.type === 'submission') &&
-    item.entity_id
-  ) {
-    setView('challenges');
-    setNotificationChallengeId(item.entity_id);
-    return;
-  }
+  const handleNotificationClick = async (item) => {
+    await markAsRead(item.id);
+    setOpen(false);
 
-  // Project like and comment notifications
-  if (
-    (item.type === 'like' ||
-      item.type === 'comment') &&
-    item.entity_id
-  ) {
-    setView('feed');
-    setNotificationProjectId(item.entity_id);
-    setNotificationProjectType(item.type);
-  }
-};
+    if (
+      (item.type === 'challenge_join' ||
+        item.type === 'submission') &&
+      item.entity_id
+    ) {
+      setView('challenges');
+      setNotificationChallengeId(item.entity_id);
+      return;
+    }
+
+    if (
+      (item.type === 'like' ||
+        item.type === 'comment') &&
+      item.entity_id
+    ) {
+      setView('feed');
+      setNotificationProjectId(item.entity_id);
+      setNotificationProjectType(item.type);
+    }
+  };
+
   return (
     <div className="relative">
       <button
@@ -4632,7 +4632,9 @@ function Notifications({
                           ? new Date(item.created_at).toLocaleString()
                           : ''}
                       </p>
-                                      {!item.is_read && (
+                    </div>
+
+                    {!item.is_read && (
                       <span className="w-2 h-2 mt-1 rounded-full bg-cyan-400 shrink-0" />
                     )}
                   </button>
@@ -4643,6 +4645,5 @@ function Notifications({
         </>
       )}
     </div>
-  </>
-);
+  );
 }
