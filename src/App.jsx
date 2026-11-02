@@ -9,6 +9,7 @@ import {
 import { Analytics } from '@vercel/analytics/react';
 
 import { supabase, isSupabaseConfigured } from './lib/supabaseClient';
+
 const AVATAR_BUCKET = 'avatars';
 
 const DEFAULT_AVATAR =
@@ -1012,7 +1013,7 @@ function LegalPage({ page, setLegalPage }) {
         ['How information is used', 'Information may be used to provide account access, display profiles and projects, operate challenges and other enabled community features, protect the service, respond to support requests and diagnose technical problems.'],
         ['Service providers', 'The current application uses Supabase for authentication and database services. Information handled by Supabase is also subject to Supabase terms and privacy documentation. The website may be hosted by a separate hosting provider. Provider practices and terms may change.'],
         ['Cookies and local storage', 'The application and its service providers may use browser storage or cookies needed for sign-in, session management, security and core site functions. Your browser can usually block or clear cookies, but doing so may affect sign-in or other features.'],
-     ['Advertising', 'SKILLVERSE uses or may use Google AdSense to display advertisements. Google and its advertising partners may use cookies or similar technologies to serve, measure and personalize advertisements, subject to applicable settings and consent requirements. Visitors can learn more at https://policies.google.com/technologies/ads.'],
+        ['Advertising', 'This policy does not state that advertisements or Google AdSense are currently active. If advertising is enabled, this policy and any required consent or privacy notices must be updated to explain the advertising provider, its use of cookies or similar technologies, and the choices available to visitors.'],
         ['Children and teenagers', 'SKILLVERSE is intended for teenagers and adults. Users should not share sensitive personal details. Anyone using the service should communicate respectfully and report unsafe content or interactions. Interactive features involving contact between users should be used only when suitable access controls and safety measures are in place.'],
         ['Data security and retention', 'Reasonable steps are taken to protect information, but no website or internet transmission can be guaranteed completely secure. Information may remain in active systems or backups for as long as needed to operate the service, address security issues and meet legal obligations. Actual retention can depend on the data type and service provider.'],
         ['Your choices', 'You may contact SKILLVERSE to ask about access, correction or deletion of account information. Requests may require reasonable account verification. Some information may need to be retained for legal, security or dispute-related reasons.'],
@@ -4497,32 +4498,32 @@ function Notifications({
       current.map((item) => ({ ...item, is_read: true }))
     );
   };
+ const handleNotificationClick = async (item) => {
+  await markAsRead(item.id);
+  setOpen(false);
 
-  const handleNotificationClick = async (item) => {
-    await markAsRead(item.id);
-    setOpen(false);
+  // Challenge notifications
+  if (
+    (item.type === 'challenge_join' ||
+      item.type === 'submission') &&
+    item.entity_id
+  ) {
+    setView('challenges');
+    setNotificationChallengeId(item.entity_id);
+    return;
+  }
 
-    if (
-      (item.type === 'challenge_join' ||
-        item.type === 'submission') &&
-      item.entity_id
-    ) {
-      setView('challenges');
-      setNotificationChallengeId(item.entity_id);
-      return;
-    }
-
-    if (
-      (item.type === 'like' ||
-        item.type === 'comment') &&
-      item.entity_id
-    ) {
-      setView('feed');
-      setNotificationProjectId(item.entity_id);
-      setNotificationProjectType(item.type);
-    }
-  };
-
+  // Project like and comment notifications
+  if (
+    (item.type === 'like' ||
+      item.type === 'comment') &&
+    item.entity_id
+  ) {
+    setView('feed');
+    setNotificationProjectId(item.entity_id);
+    setNotificationProjectType(item.type);
+  }
+};
   return (
     <div className="relative">
       <button
