@@ -1,3 +1,4 @@
+
 {
   "name": "skillverse",
   "private": true,
@@ -11,6 +12,7 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.118.0",
+    "@vercel/analytics": "^1.5.0",
     "clsx": "^2.1.0",
     "framer-motion": "^11.0.8",
     "lucide-react": "^0.354.0",
