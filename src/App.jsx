@@ -9,7 +9,6 @@ import {
 import { Analytics } from '@vercel/analytics/react';
 
 import { supabase, isSupabaseConfigured } from './lib/supabaseClient';
-import ProjectTool from './ProjectTool';
 const AVATAR_BUCKET = 'avatars';
 
 const DEFAULT_AVATAR =
